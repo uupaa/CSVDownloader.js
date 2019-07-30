@@ -10,8 +10,8 @@ const csv = new CSVDownloader();
 csv.addHead([ "created_at", "updated_at", "data" ]);
 csv.addBody([ 123, 123, "123" ]);
 csv.addBody([ 123, 123, "123" ]);
-csv.download("example.csv", { BOM: true, TSV: false, ENC: CSV_ENC.UTF8 });
-csv.download("example.csv", { BOM: true, TSV: false, ENC: CSV_ENC.UTF16 })
+csv.download("3.csv", { BOM: true, TSV: false, ENC: CSV_ENC.UTF8 });
+csv.download("5.csv", { BOM: true, TSV: false, ENC: CSV_ENC.UTF16 })
 csv.clear();
 ```
 
@@ -38,7 +38,7 @@ csv.clear();
 - NG2: Tab separator(tsv) not supported.
 - NG3: NG1 and NG2.
 
-We recommended are 3 and 5.
+We recommended are `#3` and `#5`.
 
 # CSVDownloader API
 
@@ -62,3 +62,8 @@ We recommended are 3 and 5.
 
 `CSVDownloader#download(filename:String, options = { BOM: false, TSV: false, ENC: CSV_ENC.UTF16 }):void` is create csv file and download.
 
+| options | type    | default |          |
+|---------|---------|---------|----------|
+| `BOM`   | Boolean | false   | true is Add UNICODE BOM |
+| `TSV`   | Boolean | false   | true is Tab separated CSV |
+| `ENC`   | CSV_ENC | CSV_ENC.UTF16 | Specify encoding, CSV_ENC.UTF16, CSV_ENC.UTF8 and CSV_ENC.CP932 |
