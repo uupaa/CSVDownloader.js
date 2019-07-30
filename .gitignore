@@ -1,0 +1,15 @@
+## assets
+
+## ignore the dependency modules directory
+node_modules
+
+## ignore the file that is automatically regenerated
+
+## ignore the setting files
+.DS_Store
+
+## dust
+npm-debug.log
+package-lock.json
+
+dist
