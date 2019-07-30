@@ -4,6 +4,8 @@ Create and download a CSV file on a browser.
 
 # Usage
 
+`$ npm i -S uupaa.csv.downloader.js`
+
 ```js
 const { CSVDownloader, CSV_ENC } = require("uupaa.csv.downloader.js");
 const csv = new CSVDownloader();
