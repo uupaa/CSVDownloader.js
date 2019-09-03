@@ -21,22 +21,23 @@ class CSVDownloader {
   addBody(array) {
     this._body.push(array);
   }
-  download(file_name, options = { BOM: false, TSV: false, ENC: CSV_ENC.UTF16 }) {
+  download(file_name, options = { BOM: false, TSV: false, ENC: CSV_ENC.UTF16, DQT: false }) {
     const BOM = options.BOM || false;
     const TSV = options.TSV || false;
     const ENC = options.ENC || CSV_ENC.UTF16;
+    const DQT = options.DQT || false;
     switch (ENC) {
-      case CSV_ENC.UTF8: this._download_utf8(file_name, BOM, TSV); break;
-      case CSV_ENC.UTF16: this._download_utf16(file_name, BOM, TSV); break;
-      case CSV_ENC.CP932: this._download_cp932(file_name, BOM, TSV); break;
+      case CSV_ENC.UTF8: this._download_utf8(file_name, BOM, TSV, DQT); break;
+      case CSV_ENC.UTF16: this._download_utf16(file_name, BOM, TSV, DQT); break;
+      case CSV_ENC.CP932: this._download_cp932(file_name, BOM, TSV, DQT); break;
     }
   }
-  _download_utf8(file_name, BOM_, TSV_) {
+  _download_utf8(file_name, BOM_, TSV_, DQT) {
     const CRLF = "\r\n";
     const BOM = BOM_ ? "\uFEFF" : ""; // new Uint8Array([0xEF, 0xBB, 0xBF]);
     const SEP = TSV_ ? "\t" : ",";
-    const CSV_HEAD = this._head.length ? this._head.join(SEP) : "";
-    const CSV_BODY = this._body.length ? this._body.map(row => row.join(SEP)).join(CRLF) : "";
+    const CSV_HEAD = this._head.length ? this._head.map(v => DQT ? `"${v}"` : v).join(SEP) : "";
+    const CSV_BODY = this._body.length ? this._body.map(row => DQT ? row.map(v => `"${v}"`).join(SEP) : row.join(SEP)).join(CRLF) : "";
     const enc = new TextEncoder();
     const CSV_HEAD_UTF8 = enc.encode(CSV_HEAD);
     const CSV_ROWS_UTF8 = enc.encode(CSV_BODY);
@@ -49,12 +50,12 @@ class CSVDownloader {
     link.click();
     URL.revokeObjectURL(url);
   }
-  _download_utf16(file_name, BOM_, TSV_) {
+  _download_utf16(file_name, BOM_, TSV_, DQT) {
     const CRLF = "\r\n";
     const BOM = BOM_ ? "\uFEFF" : ""; // new Uint8Array([0xEF, 0xBB, 0xBF]);
     const SEP = TSV_ ? "\t" : ",";
-    const CSV_HEAD = this._head.length ? this._head.join(SEP) : "";
-    const CSV_BODY = this._body.length ? this._body.map(row => row.join(SEP)).join(CRLF) : "";
+    const CSV_HEAD = this._head.length ? this._head.map(v => DQT ? `"${v}"` : v).join(SEP) : "";
+    const CSV_BODY = this._body.length ? this._body.map(row => DQT ? row.map(v => `"${v}"`).join(SEP) : row.join(SEP)).join(CRLF) : "";
 
     const blob = new Blob([BOM, CSV_HEAD, "\r\n", CSV_BODY], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
@@ -64,12 +65,13 @@ class CSVDownloader {
     link.click();
     URL.revokeObjectURL(url);
   }
-  _download_cp932(file_name, BOM_, TSV_) {
+  _download_cp932(file_name, BOM_, TSV_, DQT) {
     const CRLF = "\r\n";
     const BOM = BOM_ ? "\uFEFF" : ""; // new Uint8Array([0xEF, 0xBB, 0xBF]);
     const SEP = TSV_ ? "\t" : ",";
-    const CSV_HEAD = this._head.length ? this._head.join(SEP) : "";
-    const CSV_BODY = this._body.length ? this._body.map(row => row.join(SEP)).join(CRLF) : "";
+    const CSV_HEAD = this._head.length ? this._head.map(v => DQT ? `"${v}"` : v).join(SEP) : "";
+    const CSV_BODY = this._body.length ? this._body.map(row => DQT ? row.map(v => `"${v}"`).join(SEP) : row.join(SEP)).join(CRLF) : "";
+
     const CSV_HEAD_CP932 = iconv.encode(CSV_HEAD, "CP932");
     const CSV_ROWS_CP932 = iconv.encode(CSV_BODY, "CP932");
     const blob = new Blob([BOM, CSV_HEAD_CP932, "\r\n", CSV_ROWS_CP932], { type: "text/csv" });

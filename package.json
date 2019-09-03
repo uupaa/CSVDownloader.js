@@ -1,6 +1,6 @@
 {
   "name": "uupaa.csv.downloader.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Create and download a CSV file on a browser.",
   "main": "index.js",
   "scripts": {
