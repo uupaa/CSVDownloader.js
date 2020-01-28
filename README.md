@@ -19,28 +19,28 @@ csv.clear();
 
 # CSV file type and availabilities
 
-| # | BOM | TYPE | ENCODE | file name |
-|---|-----|------|--------|-----------|
-| 1 | NO  | CSV  | CP932  | 1.csv     |
-| 2 | NO  | TSV  | CP932  | 2.csv     |
-| 3 | YES | CSV  | UTF-8  | 3.csv     |
-| 4 | YES | TSV  | UTF-8  | 4.csv     |
-| 5 | YES | CSV  | UTF-16 | 5.csv     |
-| 6 | YES | TSV  | UTF-16 | 6.csv     |
+| Applications                    | Version     |
+|---------------------------------|-------------|
+| `MAC-EXCEL` as Excel for Mac      | 16          |
+| `WIN-EXCEL` as Windows Excel      | 2010        |
+| `MAC-NUMS`  as Mac Numbers        | 6.0         |
+| `GOG-SHEET` as Google Spreadsheet | N/A         |       
 
-| Apps                | #1  | #2  | #3  | #4  | #5  | #6  |
-|---------------------|-----|-----|-----|-----|-----|-----|
-| Mac Numbers         | OK  | OK  | OK  | OK  | OK  | OK  |
-| Excel for Mac ver16 | NG1 | NG3 | OK  | NG2 | OK  | NG2 |
-| Google spreadsheet  | OK  | OK  | OK  | OK  | OK  | OK  |
-| Windows Excel 2010  | OK  | OK  | OK  | OK  | OK  | OK  |
+| BOM | TYPE | ENCODE | `MAC-EXCEL` | `WIN-EXCEL` | `MAC-NUMS` | `GOG-SHEET` |
+|-----|------|--------|-----------|-----------|----------|-----------|
+| NO  | CSV  | CP932  | `NG1`     | OK        | OK       | OK        |
+| NO  | TSV  | CP932  | `NG3`     | OK        | OK       | OK        |
+| YES | CSV  | UTF-8  | OK        | OK        | OK       | OK        |
+| YES | TSV  | UTF-8  | `NG2`     | OK        | OK       | OK        |
+| YES | CSV  | UTF-16 | OK        | OK        | OK       | OK        |
+| YES | TSV  | UTF-16 | `NG2`     | OK        | OK       | OK        |
 
 - OK: It's OK.
-- NG1: It was garbled.
-- NG2: Tab separator(tsv) not supported.
-- NG3: NG1 and NG2.
+- `NG1`: It was garbled.
+- `NG2`: Tab separator(tsv) not supported.
+- `NG3`: NG1 and NG2.
 
-We recommended are `#3` and `#5`.
+If you need to support excel on Mac, use `BOM` and `CSV`.
 
 # CSVDownloader API
 
